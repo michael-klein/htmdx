@@ -1,0 +1,50 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --env=jsdom --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "htmdx",
+  "author": "Michael Klein",
+  "module": "dist/htmdx.esm.js",
+  "devDependencies": {
+    "@types/jest": "^24.0.24",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "husky": "^3.1.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "tsdx": "^0.12.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
+    "@types/marked": "^0.7.2",
+    "htm": "^2.2.1",
+    "html-entities-decode": "^1.0.1",
+    "marked": "^0.8.0"
+  }
+}
