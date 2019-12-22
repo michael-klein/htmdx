@@ -25,13 +25,14 @@ const markDownWithJSX = `
 `;
 
 ReactDOM.render(
-  htmdx(markDownWithJSX, 
+  htmdx(
+    markDownWithJSX,
     React.createElement, // Provide a h function. You can also use HTMDX with preact or any other library that supports the format
     {
       components: { SomeComponent }, // provide components that will be available in markdown files
     }
-  )
-),
-  document.getElementById('root');
+  ),
+  document.getElementById('root')
+);
 
 ```
