@@ -11,28 +11,32 @@ This library is an attempt to provide a runtime to compile [mdx](https://github.
 ## Usage
 
 ```javascript
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { htmdx } from 'htmdx';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { htmdx } from "htmdx";
 
 const markDownWithJSX = `
   # Hello World
   
   <SomeComponent />
   
-  Mardown will be interpreted as tagged templates from htm (hence ${}):
-  <input type="text" value=\${"Some value"} onChange=\${e => console.log(e.target.value)}/>
+  Mardown will be interpreted as tagged templates from htm:
+
+  <input type="text" style=\${{width: '100%'}} value=\${"Editing this will console.log the value"} onChange=\${e => console.log(e.target.value)}/>
 `;
+
+function SomeComponent() {
+  return "Some component ouput.";
+}
 
 ReactDOM.render(
   htmdx(
     markDownWithJSX,
     React.createElement, // Provide a h function. You can also use HTMDX with preact or any other library that supports the format
     {
-      components: { SomeComponent }, // provide components that will be available in markdown files
+      components: { SomeComponent } // provide components that will be available in markdown files
     }
   ),
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
 ```
