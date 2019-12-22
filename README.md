@@ -26,8 +26,11 @@ const markDownWithJSX = `
 
   <SomeComponent />
 
-  Mardown will be interpreted as tagged templates from htm (hence ${}):
+  Mardown will be interpreted as tagged templates from htm:
   <input type="text" style=\${{width: '100%'}} value=\${"Editing this will console.log the value"} onChange=\${e => console.log(e.target.value)}/>
+
+  With the transformJSXToHTM option enabled, you may also use normal brackets:
+  <input type="text" style={{width: '100%'}} value={"Editing this will console.log the value too"} onChange={e => console.log(e.target.value)}/>
 
 function SomeComponent() {
   return "Some component ouput.";
