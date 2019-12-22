@@ -35,7 +35,8 @@ With the transformJSXToHTM option enabled, you may also use normal brackets:
 
 function SomeComponent() {
   return "Some component ouput.";
-}`;
+}
+`;
 
 ReactDOM.render(
   htmdx(
