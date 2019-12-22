@@ -15,11 +15,15 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { htmdx } from 'htmdx';
 
+function SomeComponent() {
+  return "something";
+}
+
 const markDownWithJSX = `
   # Hello World
-  
+
   <SomeComponent />
-  
+
   Mardown will be interpreted as tagged templates from htm (hence ${}):
   <input type="text" value=\${"Some value"} onChange=\${e => console.log(e.target.value)}/>
 `;
@@ -27,9 +31,20 @@ const markDownWithJSX = `
 ReactDOM.render(
   htmdx(
     markDownWithJSX,
-    React.createElement, // Provide a h function. You can also use HTMDX with preact or any other library that supports the format
+    React.createElement, // provide a h function. You can also use HTMDX with preact or any other library that supports the format
     {
-      components: { SomeComponent }, // provide components that will be available in markdown files
+      components: { SomeComponent }, // provide components that will be available in markdown files,
+      configureMarked: marked => // configure the underlying marked parser, e.x.: to add code highlighting:
+          marked.setOptions({
+            highlight: function(code) {
+              return Prism.highlight(
+                code,
+                Prism.languages.javascript,
+                'javascript'
+              ).replace(/\n/g, '<br/>');
+            },
+          }),
+      transformJSXToHTM: true // transforms some JSX to htm template literal syntax (such as value={} to value=${})
     }
   ),
   document.getElementById('root')

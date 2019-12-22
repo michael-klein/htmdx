@@ -7,6 +7,7 @@ import * as ReactDOM from 'react-dom';
 import { htmdx } from '../dist';
 import htm from 'htm';
 import ErrorBoundary from 'react-error-boundary';
+import * as Prism from 'prismjs';
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Inria+Serif|Roboto|Roboto+Mono&display=swap');
@@ -39,7 +40,7 @@ const markDownWithJSX = `
 
 ## this is an input that actually prints something to the console on change:
 
-<input type="text" value=\${"lol"} onChange=\${e => console.log(e.target.value)}/>
+<input type="text" value=\${""} onChange=\${e => console.log(e.target.value)}/>
 
 ## Here is a simple component:
 
@@ -105,6 +106,16 @@ function RenderOutput({ input }): JSX.Element {
     >
       {htmdx(input, React.createElement, {
         components: { TestComponent },
+        configureMarked: marked =>
+          marked.setOptions({
+            highlight: function(code) {
+              return Prism.highlight(
+                code,
+                Prism.languages.javascript,
+                'javascript'
+              ).replace(/\n/g, '<br/>');
+            },
+          }),
       })}
     </div>
   );
@@ -134,7 +145,7 @@ function HTMDXEditor(): JSX.Element {
             background: #d5d486;
           `}
         >
-          htmdx input
+          htmdx input (editable)
         </div>
         <textarea
           autoCorrect="false"
@@ -175,7 +186,7 @@ function HTMDXEditor(): JSX.Element {
         >
           rendered output
         </div>
-        <ErrorBoundary FallbackComponent={ErrorComponent}>
+        <ErrorBoundary FallbackComponent={ErrorComponent} key={input}>
           <RenderOutput input={input}></RenderOutput>
         </ErrorBoundary>
       </div>
