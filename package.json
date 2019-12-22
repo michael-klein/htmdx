@@ -46,5 +46,19 @@
     "htm": "^2.2.1",
     "html-entities-decode": "^1.0.1",
     "marked": "^0.8.0"
-  }
+  },
+  "description": "<p align=\"center\">   <img alt=\"HTMDX logo\" src=\"./htmdx.svg\" width=\"100\" /> </p>",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michael-klein/htmdx.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/michael-klein/htmdx/issues"
+  },
+  "homepage": "https://github.com/michael-klein/htmdx#readme"
 }
