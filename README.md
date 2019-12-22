@@ -11,7 +11,6 @@ This library is an attempt to provide a runtime to compile [mdx](https://github.
 ## Usage
 
 Simple example:
-[![Edit htmdx example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/romantic-liskov-m4x35?fontsize=14&hidenavigation=1&theme=dark)
 ```javascript
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -42,3 +41,4 @@ ReactDOM.render(
   document.getElementById("root")
 );
 ```
+[![Edit htmdx example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/romantic-liskov-m4x35?fontsize=14&hidenavigation=1&theme=dark)
