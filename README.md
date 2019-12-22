@@ -10,10 +10,12 @@ This library is an attempt to provide a runtime to compile [mdx](https://github.
 
 ## Usage
 
+Simple example:
+
 ```javascript
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { htmdx } from 'htmdx';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { htmdx } from "htmdx";
 
 function SomeComponent() {
   return "something";
@@ -25,8 +27,11 @@ const markDownWithJSX = `
   <SomeComponent />
 
   Mardown will be interpreted as tagged templates from htm (hence ${}):
-  <input type="text" value=\${"Some value"} onChange=\${e => console.log(e.target.value)}/>
-`;
+  <input type="text" style=\${{width: '100%'}} value=\${"Editing this will console.log the value"} onChange=\${e => console.log(e.target.value)}/>
+
+function SomeComponent() {
+  return "Some component ouput.";
+}
 
 ReactDOM.render(
   htmdx(
@@ -47,7 +52,8 @@ ReactDOM.render(
       transformJSXToHTM: true // transforms some JSX to htm template literal syntax (such as value={} to value=${})
     }
   ),
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
 ```
+
+[![Edit htmdx example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/romantic-liskov-m4x35?fontsize=14&hidenavigation=1&theme=dark)
