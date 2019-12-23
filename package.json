@@ -10,6 +10,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --env=jsdom --passWithNoTests",
+    "test-cli": "CI=true tsdx test --env=jsdom --passWithNoTests",
     "lint": "tsdx lint",
     "prepare": "tsdx build"
   },
