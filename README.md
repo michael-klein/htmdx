@@ -45,7 +45,7 @@ ReactDOM.render(
     {
       components: { SomeComponent }, // provide components that will be available in markdown files,
       configureMarked: (
-        marked // configure the underlying marked parser, e.x.: to add code highlighting:
+        marked // configure the underlying marked parser, e.g.: to add code highlighting:
       ) =>
         marked.setOptions({
           highlight: function(code) {
