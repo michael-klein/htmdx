@@ -25,29 +25,35 @@ function SomeComponent() {
 }
 
 const markDownWithJSX = `
-# Hello World
+  # Hello World
 
-<SomeComponent />
+  <SomeComponent />
 
-Markdown will be interpreted as tagged templates from htm:
-<input type="text" style=\${{width: '100%'}} value=\${"Editing this will console.log the value"} onChange=\${e => console.log(e.target.value)}/>
+  Mardown will be interpreted as tagged templates from htm:
+  <input type="text" style=\${{width: '100%'}} value=\${this.state.inputValue || ''} onChange=\${e => {this.setState({inputValue:e.target.value});console.log(e.target.value)}}/>
+  We're also using the setState method and state property passed into using the thisValue options (see below)
 
-With the transformJSXToHTM option enabled, you may also use normal brackets:
-<input type="text" style={{width: '100%'}} value={"Editing this will console.log the value too"} onChange={e => console.log(e.target.value)}/>
-
-function SomeComponent() {
-  return "Some component ouput.";
-}
+  With the transformJSXToHTM option enabled, you may also use normal brackets:
+  <input type="text" style={{width: '100%'}} value={this.state.inputValue || ''} onChange={e => this.setState({inputValue:e.target.value})}/>
+  
+  Here's some code with code highlighting:
+  \`\`\`
+  function SomeComponent() {
+    return "Some component ouput.";
+  }
+  \`\`\`
 `;
 
-ReactDOM.render(
-  htmdx(
+function App() {
+  const [state, setState] = React.useState({});
+
+  return htmdx(
     markDownWithJSX,
     React.createElement, // provide a h function. You can also use HTMDX with preact or any other library that supports the format
     {
       components: { SomeComponent }, // provide components that will be available in markdown files,
       configureMarked: (
-        marked // configure the underlying marked parser, e.g.: to add code highlighting:
+        marked // configure the underlying marked parser, e.x.: to add code highlighting:
       ) =>
         marked.setOptions({
           highlight: function(code) {
@@ -58,11 +64,17 @@ ReactDOM.render(
             ).replace(/\n/g, "<br/>");
           }
         }),
-      transformJSXToHTM: true // transforms some JSX to htm template literal syntax (such as value={} to value=${})
+      transformJSXToHTM: true, // transforms some JSX to htm template literal syntax (such as value={} to value=${}),
+      thisValue: {
+        // the this value passed to the compiled JSX
+        state,
+        setState: newState => setState(Object.assign({}, state, newState))
+      }
     }
-  ),
-  document.getElementById("root")
-);
+  );
+}
+
+ReactDOM.render(React.createElement(App), document.getElementById("root"));
 ```
 
 [![Edit htmdx example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/romantic-liskov-m4x35?fontsize=14&hidenavigation=1&theme=dark)
