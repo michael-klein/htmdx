@@ -41500,10 +41500,17 @@ function handleComponents(m) {
   return m;
 }
 
-function markedToReact(m, components, html) {
+function markedToReact(m, components, html, thisValue) {
+  if (thisValue === void 0) {
+    thisValue = {};
+  }
+
   m = decode(m);
   m = handleComponents(m);
-  return _construct(Function, ['html'].concat(Object.keys(components), ['return html`' + m + '`'])).apply(void 0, [html].concat(Object.values(components)));
+  m.split(/<code(.|\n)*<\/code>/g).forEach(function (str) {
+    m = m.replace(str, str.replace(/class=/g, 'className='));
+  });
+  return _construct(Function, ['html', 'thisValue'].concat(Object.keys(components), ['return (function() {return html`' + m + '`}).call(thisValue)'])).apply(void 0, [html, thisValue].concat(Object.values(components)));
 }
 
 function transFormJSXToHTM(m) {
@@ -41529,7 +41536,7 @@ function htmdx(m, h, options) {
     configureMarked(marked);
   }
 
-  return markedToReact(marked(transformJSXToHTM ? transFormJSXToHTM(m) : m), components, htm.bind(h));
+  return markedToReact(marked(transformJSXToHTM ? transFormJSXToHTM(m) : m), components, htm.bind(h), options.thisValue || {});
 }
 
 exports.htmdx = htmdx;
@@ -43781,7 +43788,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38793" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38669" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

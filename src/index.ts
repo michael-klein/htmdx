@@ -27,21 +27,36 @@ function handleComponents(m: string): string {
 function markedToReact<
   Component extends any = any,
   C extends Components<Component> = Components<Component>
->(m: string, components: Components<C>, html: () => any): any {
+>(
+  m: string,
+  components: Components<C>,
+  html: () => any,
+  thisValue: any = {}
+): any {
   m = decode(m);
   m = handleComponents(m);
+  m.split(/<code(.|\n)*<\/code>/g).forEach(str => {
+    m = m.replace(str, str.replace(/class=/g, 'className='));
+  });
   return new Function(
-    ...['html', ...Object.keys(components), 'return html`' + m + '`']
-  )(...[html, ...Object.values(components)]);
+    ...[
+      'html',
+      'thisValue',
+      ...Object.keys(components),
+      'return (function() {return html`' + m + '`}).call(thisValue)',
+    ]
+  )(...[html, thisValue, ...Object.values(components)]);
 }
 export type Marked = typeof marked;
 export interface HtmdxOptions<
   Component extends any = any,
-  C extends Components<Component> = Components<Component>
+  C extends Components<Component> = Components<Component>,
+  ThisValue extends {} = any
 > {
   components?: C;
   transformJSXToHTM?: boolean;
   configureMarked?: (marked: Marked) => void;
+  thisValue?: ThisValue;
 }
 
 function transFormJSXToHTM(m: string): string {
@@ -73,6 +88,7 @@ export function htmdx<
   return markedToReact(
     marked(transformJSXToHTM ? transFormJSXToHTM(m) : m),
     components,
-    htm.bind(h)
+    htm.bind(h),
+    options.thisValue || {}
   );
 }
