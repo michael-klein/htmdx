@@ -8,6 +8,8 @@ This library is an attempt to provide a runtime to compile [mdx](https://github.
 
 [Here is a simple example playground using HTMDX](https://michael-klein.github.io/htmdx/example/dist/index.html)
 
+Note: This is highly experimental and untested thus far!
+
 ## Usage
 
 Simple example:
