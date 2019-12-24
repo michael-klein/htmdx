@@ -1,16 +1,16 @@
 sudo: false
 language: node_js
 node_js:
-  - '8'
+- '8'
 branches:
   only:
-    - master
+  - master
 cache:
   directories:
-    - node_modules
+  - node_modules
 before_install:
-  - npm update
+- npm update
 install:
-  - npm install
+- npm install
 script:
-  - npm run test-cli
+  - npm run test-cli 
