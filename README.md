@@ -66,8 +66,8 @@ function App() {
             ).replace(/\n/g, '<br/>');
           },
         }),
-      transformClassToClassname: true,
-      transformJSXToHTM: true, // transforms some JSX to htm template literal syntax (such as value={} to value=${}),
+      transformClassToClassname: true, // transforms class="some-class" to className="some-class" (default: true)
+      transformJSXToHTM: true, // transforms some JSX to htm template literal syntax (such as value={} to value=${}) (default: true)
       thisValue: {
         // the this value passed to the compiled JSX
         state,
