@@ -32,20 +32,68 @@ const withComponents = `
 <SomeComponent value={1 + 2} />
 `;
 
+const withClassesToTransform = `
+  # hello world
+  <div class="test1">test</div>
+
+  \`\`\`
+  class="test2"
+  \`\`\`
+`;
+
 describe('htmdx', () => {
-  it('renders basic markdown', () => {
-    const root = document.createElement('app-root');
-    ReactDOM.render(htmdx(simpleMarkdown, React.createElement), root);
-    expect(root.innerHTML).toMatch(/<h1 id="hello-world">Hello World<\/h1>/);
-    expect(root.innerHTML).toMatch(/<pre><code>function SomeComponent\(\) {/);
+  let root = document.createElement('app-root');
+  beforeAll(() => {
+    root = document.createElement('app-root');
+    document.body.appendChild(root);
+  });
+
+  afterAll(() => {
     ReactDOM.unmountComponentAtNode(root);
     root.remove();
   });
 
-  describe('JSX expression bindings', () => {
-    let root = document.createElement('app-root');
-    let inst: Demo;
+  it('renders basic markdown', () => {
+    ReactDOM.render(htmdx(simpleMarkdown, React.createElement), root);
+    expect(root.innerHTML).toMatch(/<h1 id="hello-world">Hello World<\/h1>/);
+    expect(root.innerHTML).toMatch(/<pre><code>function SomeComponent\(\) {/);
+  });
 
+  describe('class transforms', () => {
+    it('should transform class to className outside of code tags by default', () => {
+      const result: string[] = [];
+      htmdx(withClassesToTransform, (_, props) => {
+        if (props) {
+          Object.keys(props).forEach(key => {
+            result.push(`${key}="${props[key]}"`);
+          });
+        }
+      });
+      const joined = result.join('\n');
+      expect(joined).toMatch(/className="test1"/);
+      expect(joined).not.toMatch(/className="test2"/);
+    });
+    it('should not transform class to className outside of code tags if disabled', () => {
+      const result: string[] = [];
+      htmdx(
+        withClassesToTransform,
+        (_, props) => {
+          if (props) {
+            Object.keys(props).forEach(key => {
+              result.push(`${key}="${props[key]}"`);
+            });
+          }
+        },
+        { transformClassToClassname: false }
+      );
+      const joined = result.join('\n');
+      expect(joined).not.toMatch(/className="test1"/);
+      expect(joined).not.toMatch(/className="test2"/);
+    });
+  });
+
+  describe('JSX expression bindings', () => {
+    let inst: Demo;
     class Demo extends React.Component {
       state = {
         inputValue: 1,
@@ -55,16 +103,6 @@ describe('htmdx', () => {
         return htmdx(withBindings, React.createElement, { thisValue: this });
       }
     }
-
-    beforeAll(() => {
-      document.body.appendChild(root);
-    });
-
-    afterAll(() => {
-      ReactDOM.unmountComponentAtNode(root);
-      root.remove();
-    });
-
     it('should render bindings using initial values', () => {
       ReactDOM.render(<Demo />, root);
       expect(root.innerHTML).toMatch(/ style="width: 100%;"/);
@@ -87,8 +125,8 @@ describe('htmdx', () => {
       }, 1);
     });
   });
+
   it('renders JSX expression bindings', () => {
-    const root = document.createElement('app-root');
     class Demo extends React.Component {
       state = {
         inputValue: 1,
@@ -100,22 +138,17 @@ describe('htmdx', () => {
     ReactDOM.render(<Demo />, root);
     expect(root.innerHTML).toMatch(/ style="width: 100%;"/);
     expect(root.innerHTML).toMatch(/ value="1"/);
-    ReactDOM.unmountComponentAtNode(root);
-    root.remove();
   });
 
   it('renders markdown with embedded JSX components', () => {
     const SomeComponent = ({ value }: { value: number }) => (
       <span>SomeComponent value is {value}</span>
     );
-    const root = document.createElement('app-root');
     ReactDOM.render(
       htmdx(withComponents, React.createElement, {
         components: { SomeComponent },
       }),
       root
     );
-    ReactDOM.unmountComponentAtNode(root);
-    root.remove();
   });
 });
