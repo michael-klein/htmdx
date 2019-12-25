@@ -92,6 +92,45 @@ describe('htmdx', () => {
     });
   });
 
+  describe('customs transforms', () => {
+    it('should run custom transforms if supplied', () => {
+      ReactDOM.render(
+        htmdx(simpleMarkdown, React.createElement, {
+          jsxTransforms: [
+            (props, type, children) => {
+              if (children && children[0] === 'Hello World') {
+                children[0] = 'Foo';
+              }
+              return [props, type, children];
+            },
+          ],
+        }),
+        root
+      );
+      expect(root.innerHTML).not.toMatch(
+        /<h1 id="hello-world">Hello World<\/h1>/
+      );
+      expect(root.innerHTML).toMatch(/<h1 id="hello-world">Foo<\/h1>/);
+    });
+    it('should not transform class to className outside of code tags if disabled', () => {
+      const result: string[] = [];
+      htmdx(
+        withClassesToTransform,
+        (_, props) => {
+          if (props) {
+            Object.keys(props).forEach(key => {
+              result.push(`${key}="${props[key]}"`);
+            });
+          }
+        },
+        { transformClassToClassname: false }
+      );
+      const joined = result.join('\n');
+      expect(joined).not.toMatch(/className="test1"/);
+      expect(joined).not.toMatch(/className="test2"/);
+    });
+  });
+
   describe('JSX expression bindings', () => {
     let inst: Demo;
     class Demo extends React.Component {

@@ -11,7 +11,13 @@ export interface HtmdxOptions<
   components?: C;
   transformJSXToHTM?: boolean;
   transformClassToClassname?: boolean;
+  jsxTransforms?: JSXTransform[];
   configureMarked?: (marked: Marked) => void;
   thisValue?: ThisValue;
 }
 export type JSXFactory = (type: string, props: any, ...children: any[]) => any;
+export type JSXTransform = (
+  type: string,
+  props: any,
+  children: any[]
+) => [string, any, any];

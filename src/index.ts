@@ -1,31 +1,29 @@
 import decode from 'html-entities-decode';
 import marked from 'marked';
 import { HtmdxOptions, JSXFactory } from './types';
+import { setHTMLContext, html } from './bound_html';
 import {
-  setHTMLContext,
-  htmlWithClassTransform,
-  basicHtml,
-} from './bound_html';
+  classNameTransform,
+  getComponentTransform,
+} from './default_transforms';
 
 function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
   const {
     components = {},
     thisValue = {},
     transformClassToClassname = true,
+    jsxTransforms = [],
   } = options;
   m = decode(m);
 
-  setHTMLContext({
-    currentComponents: components,
-    currentFactory: h,
-  });
-
-  let html;
   if (transformClassToClassname) {
-    html = htmlWithClassTransform;
-  } else {
-    html = basicHtml;
+    jsxTransforms.push(classNameTransform);
   }
+  jsxTransforms.push(getComponentTransform(components));
+  setHTMLContext({
+    currentFactory: h,
+    jsxTransforms,
+  });
 
   return new Function('html', 'return html`' + m + '`').call(thisValue, html);
 }

@@ -37342,51 +37342,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"../node_modules/htm/dist/htm.module.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _default;
-
-var n = function (t, r, u, e) {
-  for (var p = 1; p < r.length; p++) {
-    var s = r[p],
-        h = "number" == typeof s ? u[s] : s,
-        a = r[++p];
-    1 === a ? e[0] = h : 3 === a ? e[1] = Object.assign(e[1] || {}, h) : 5 === a ? (e[1] = e[1] || {})[r[++p]] = h : 6 === a ? e[1][r[++p]] += h + "" : e.push(a ? t.apply(null, n(t, h, u, ["", null])) : h);
-  }
-
-  return e;
-},
-    t = function (n) {
-  for (var t, r, u = 1, e = "", p = "", s = [0], h = function (n) {
-    1 === u && (n || (e = e.replace(/^\s*\n\s*|\s*\n\s*$/g, ""))) ? s.push(n || e, 0) : 3 === u && (n || e) ? (s.push(n || e, 1), u = 2) : 2 === u && "..." === e && n ? s.push(n, 3) : 2 === u && e && !n ? s.push(!0, 5, e) : u >= 5 && ((e || !n && 5 === u) && (s.push(e, u, r), u = 6), n && (s.push(n, u, r), u = 6)), e = "";
-  }, a = 0; a < n.length; a++) {
-    a && (1 === u && h(), h(a));
-
-    for (var f = 0; f < n[a].length; f++) t = n[a][f], 1 === u ? "<" === t ? (h(), s = [s], u = 3) : e += t : 4 === u ? "--" === e && ">" === t ? (u = 1, e = "") : e = t + e[0] : p ? t === p ? p = "" : e += t : '"' === t || "'" === t ? p = t : ">" === t ? (h(), u = 1) : u && ("=" === t ? (u = 5, r = e, e = "") : "/" === t && (u < 5 || ">" === n[a][f + 1]) ? (h(), 3 === u && (s = s[0]), u = s, (s = s[0]).push(u, 2), u = 0) : " " === t || "\t" === t || "\n" === t || "\r" === t ? (h(), u = 2) : e += t), 3 === u && "!--" === e && (u = 4, s = s[0]);
-  }
-
-  return h(), s;
-},
-    r = "function" == typeof Map,
-    u = r ? new Map() : {},
-    e = r ? function (n) {
-  var r = u.get(n);
-  return r || u.set(n, r = t(n)), r;
-} : function (n) {
-  for (var r = "", e = 0; e < n.length; e++) r += n[e].length + "-" + n[e];
-
-  return u[r] || (u[r] = t(n));
-};
-
-function _default(t) {
-  var r = n(this, e(t), arguments, []);
-  return r.length > 1 ? r : r[0];
-}
-},{}],"../node_modules/html-entities-decode/dist/entities.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"../node_modules/html-entities-decode/dist/entities.js":[function(require,module,exports) {
 "use strict";
 /* ENTITIES */
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -41427,7 +41383,51 @@ marked.inlineLexer = InlineLexer.output;
 marked.Slugger = Slugger;
 marked.parse = marked;
 module.exports = marked;
-},{"./Lexer.js":"../node_modules/marked/src/Lexer.js","./Parser.js":"../node_modules/marked/src/Parser.js","./Renderer.js":"../node_modules/marked/src/Renderer.js","./TextRenderer.js":"../node_modules/marked/src/TextRenderer.js","./InlineLexer.js":"../node_modules/marked/src/InlineLexer.js","./Slugger.js":"../node_modules/marked/src/Slugger.js","./helpers.js":"../node_modules/marked/src/helpers.js","./defaults.js":"../node_modules/marked/src/defaults.js"}],"../dist/htmdx.cjs.development.js":[function(require,module,exports) {
+},{"./Lexer.js":"../node_modules/marked/src/Lexer.js","./Parser.js":"../node_modules/marked/src/Parser.js","./Renderer.js":"../node_modules/marked/src/Renderer.js","./TextRenderer.js":"../node_modules/marked/src/TextRenderer.js","./InlineLexer.js":"../node_modules/marked/src/InlineLexer.js","./Slugger.js":"../node_modules/marked/src/Slugger.js","./helpers.js":"../node_modules/marked/src/helpers.js","./defaults.js":"../node_modules/marked/src/defaults.js"}],"../node_modules/htm/dist/htm.module.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var n = function (t, r, u, e) {
+  for (var p = 1; p < r.length; p++) {
+    var s = r[p],
+        h = "number" == typeof s ? u[s] : s,
+        a = r[++p];
+    1 === a ? e[0] = h : 3 === a ? e[1] = Object.assign(e[1] || {}, h) : 5 === a ? (e[1] = e[1] || {})[r[++p]] = h : 6 === a ? e[1][r[++p]] += h + "" : e.push(a ? t.apply(null, n(t, h, u, ["", null])) : h);
+  }
+
+  return e;
+},
+    t = function (n) {
+  for (var t, r, u = 1, e = "", p = "", s = [0], h = function (n) {
+    1 === u && (n || (e = e.replace(/^\s*\n\s*|\s*\n\s*$/g, ""))) ? s.push(n || e, 0) : 3 === u && (n || e) ? (s.push(n || e, 1), u = 2) : 2 === u && "..." === e && n ? s.push(n, 3) : 2 === u && e && !n ? s.push(!0, 5, e) : u >= 5 && ((e || !n && 5 === u) && (s.push(e, u, r), u = 6), n && (s.push(n, u, r), u = 6)), e = "";
+  }, a = 0; a < n.length; a++) {
+    a && (1 === u && h(), h(a));
+
+    for (var f = 0; f < n[a].length; f++) t = n[a][f], 1 === u ? "<" === t ? (h(), s = [s], u = 3) : e += t : 4 === u ? "--" === e && ">" === t ? (u = 1, e = "") : e = t + e[0] : p ? t === p ? p = "" : e += t : '"' === t || "'" === t ? p = t : ">" === t ? (h(), u = 1) : u && ("=" === t ? (u = 5, r = e, e = "") : "/" === t && (u < 5 || ">" === n[a][f + 1]) ? (h(), 3 === u && (s = s[0]), u = s, (s = s[0]).push(u, 2), u = 0) : " " === t || "\t" === t || "\n" === t || "\r" === t ? (h(), u = 2) : e += t), 3 === u && "!--" === e && (u = 4, s = s[0]);
+  }
+
+  return h(), s;
+},
+    r = "function" == typeof Map,
+    u = r ? new Map() : {},
+    e = r ? function (n) {
+  var r = u.get(n);
+  return r || u.set(n, r = t(n)), r;
+} : function (n) {
+  for (var r = "", e = 0; e < n.length; e++) r += n[e].length + "-" + n[e];
+
+  return u[r] || (u[r] = t(n));
+};
+
+function _default(t) {
+  var r = n(this, e(t), arguments, []);
+  return r.length > 1 ? r : r[0];
+}
+},{}],"../dist/htmdx.cjs.development.js":[function(require,module,exports) {
 'use strict';
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -41440,84 +41440,113 @@ function _interopDefault(ex) {
   return ex && _typeof(ex) === 'object' && 'default' in ex ? ex['default'] : ex;
 }
 
-var htm = _interopDefault(require('htm'));
-
 var decode = _interopDefault(require('html-entities-decode'));
 
 var marked = _interopDefault(require('marked'));
 
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
+var htm = _interopDefault(require('htm'));
 
-  return _setPrototypeOf(o, p);
-}
-
-function isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-
-  try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-function _construct(Parent, args, Class) {
-  if (isNativeReflectConstruct()) {
-    _construct = Reflect.construct;
-  } else {
-    _construct = function _construct(Parent, args, Class) {
-      var a = [null];
-      a.push.apply(a, args);
-      var Constructor = Function.bind.apply(Parent, a);
-      var instance = new Constructor();
-      if (Class) _setPrototypeOf(instance, Class.prototype);
-      return instance;
-    };
-  }
-
-  return _construct.apply(null, arguments);
-}
-
-function handleComponents(m) {
-  var regexAllTags = /<([A-Z][a-zA-Z1-6]+)([^<]+)*(?:>(.*)<\/\1>|\s+\/>)/g;
-  var htmlTags = m.match(regexAllTags);
-  var regexSingleTag = /<([A-Z][a-zA-Z1-6]+)([^<]+)*(?:>(.*)<\/\1>|\s+\/>)/;
-  if (htmlTags) for (var i = 0; i < htmlTags.length && i < 5; i++) {
-    var match = regexSingleTag.exec(htmlTags[i]);
-
-    if (match) {
-      var newText = match[0].replace("<" + match[1], '<${' + match[1] + '}').replace("</" + match[1], '</${' + match[1] + '}');
-      m = m.replace(match[0], newText);
+var currentHTMLContext = {
+  currentFactory: function currentFactory(type, props) {
+    for (var _len = arguments.length, children = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      children[_key - 2] = arguments[_key];
     }
-  }
-  return m;
+
+    return {
+      type: type,
+      props: props,
+      children: children
+    };
+  },
+  jsxTransforms: []
+};
+
+function setHTMLContext(context) {
+  currentHTMLContext = context;
 }
 
-function markedToReact(m, components, html, thisValue) {
-  if (thisValue === void 0) {
-    thisValue = {};
+function applyTransforms(type, props, children) {
+  var _currentHTMLContext;
+
+  var args = [type, props, children];
+
+  for (var _iterator = currentHTMLContext.jsxTransforms, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+    var _ref;
+
+    if (_isArray) {
+      if (_i >= _iterator.length) break;
+      _ref = _iterator[_i++];
+    } else {
+      _i = _iterator.next();
+      if (_i.done) break;
+      _ref = _i.value;
+    }
+
+    var transform = _ref;
+    args = transform(type, props, children);
   }
 
+  return (_currentHTMLContext = currentHTMLContext).currentFactory.apply(_currentHTMLContext, [args[0], args[1]].concat(args[2]));
+}
+
+var html =
+/*#__PURE__*/
+htm.bind(function (type, props) {
+  for (var _len2 = arguments.length, children = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+    children[_key2 - 2] = arguments[_key2];
+  }
+
+  return applyTransforms(type, props, children);
+});
+
+var classNameTransform = function classNameTransform(type, props, children) {
+  if (props != null && 'class' in props) {
+    props.className = props["class"];
+    delete props["class"];
+  }
+
+  return [type, props, children];
+};
+
+var getComponentTransform = function getComponentTransform(components) {
+  return function (type, props, children) {
+    if (typeof type === 'string' && components[type]) {
+      // remap uppercase-leading tags to defined components
+      type = components[type];
+    }
+
+    return [type, props, children];
+  };
+};
+
+function markedToReact(m, h, options) {
+  var _options$components = options.components,
+      components = _options$components === void 0 ? {} : _options$components,
+      _options$thisValue = options.thisValue,
+      thisValue = _options$thisValue === void 0 ? {} : _options$thisValue,
+      _options$transformCla = options.transformClassToClassname,
+      transformClassToClassname = _options$transformCla === void 0 ? true : _options$transformCla,
+      _options$jsxTransform = options.jsxTransforms,
+      jsxTransforms = _options$jsxTransform === void 0 ? [] : _options$jsxTransform;
   m = decode(m);
-  m = handleComponents(m);
-  m.split(/<code(.|\n)*<\/code>/g).forEach(function (str) {
-    m = m.replace(str, str.replace(/class=/g, 'className='));
+
+  if (transformClassToClassname) {
+    jsxTransforms.push(classNameTransform);
+  }
+
+  jsxTransforms.push(getComponentTransform(components));
+  setHTMLContext({
+    currentFactory: h,
+    jsxTransforms: jsxTransforms
   });
-  return _construct(Function, ['html', 'thisValue'].concat(Object.keys(components), ['return (function() {return html`' + m + '`}).call(thisValue)'])).apply(void 0, [html, thisValue].concat(Object.values(components)));
+  return new Function('html', 'return html`' + m + '`').call(thisValue, html);
 }
 
 function transFormJSXToHTM(m) {
-  m.split(/```(.|\n)*```/g).forEach(function (str) {
-    m = m.replace(str, str.replace(/class=/g, 'className=').replace(/={/g, '=${'));
+  // transform JSX expressions to HTM expressions, but not in fenced blocks.
+  return m.replace(/(```+)[\s\S]*?\2|={/g, function (str, fence) {
+    return fence ? str : '=${';
   });
-  return m;
 }
 
 function htmdx(m, h, options) {
@@ -41526,8 +41555,6 @@ function htmdx(m, h, options) {
   }
 
   var _options = options,
-      _options$components = _options.components,
-      components = _options$components === void 0 ? {} : _options$components,
       _options$transformJSX = _options.transformJSXToHTM,
       transformJSXToHTM = _options$transformJSX === void 0 ? true : _options$transformJSX,
       configureMarked = _options.configureMarked;
@@ -41536,11 +41563,11 @@ function htmdx(m, h, options) {
     configureMarked(marked);
   }
 
-  return markedToReact(marked(transformJSXToHTM ? transFormJSXToHTM(m) : m), components, htm.bind(h), options.thisValue || {});
+  return markedToReact(marked(transformJSXToHTM ? transFormJSXToHTM(m) : m), h, options);
 }
 
 exports.htmdx = htmdx;
-},{"htm":"../node_modules/htm/dist/htm.module.js","html-entities-decode":"../node_modules/html-entities-decode/dist/index.js","marked":"../node_modules/marked/src/marked.js"}],"../dist/index.js":[function(require,module,exports) {
+},{"html-entities-decode":"../node_modules/html-entities-decode/dist/index.js","marked":"../node_modules/marked/src/marked.js","htm":"../node_modules/htm/dist/htm.module.js"}],"../dist/index.js":[function(require,module,exports) {
 'use strict';
 
 if ("development" === 'production') {
@@ -43788,7 +43815,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38669" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35079" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
