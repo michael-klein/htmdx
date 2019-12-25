@@ -10,8 +10,6 @@ This library is an attempt to provide a runtime to compile [mdx](https://github.
 
 [Here is a simple example playground using HTMDX](https://michael-klein.github.io/htmdx/example/dist/index.html)
 
-Note: This is highly experimental and untested thus far!
-
 ## Usage
 
 Simple example:
@@ -66,8 +64,8 @@ function App() {
             ).replace(/\n/g, '<br/>');
           },
         }),
-      transformClassToClassname: true,
-      transformJSXToHTM: true, // transforms some JSX to htm template literal syntax (such as value={} to value=${}),
+      transformClassToClassname: true, // transforms class="some-class" to className="some-class" (default: true)
+      transformJSXToHTM: true, // transforms some JSX to htm template literal syntax (such as value={} to value=${}) (default: true)
       thisValue: {
         // the this value passed to the compiled JSX
         state,
