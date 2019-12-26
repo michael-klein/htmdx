@@ -1,6 +1,7 @@
 import decode from 'html-entities-decode';
 import marked from 'marked';
 import { HtmdxOptions, JSXFactory } from './types';
+export { HtmdxOptions, JSXFactory, Components, Marked } from './types';
 import { setHTMLContext, html } from './bound_html';
 import {
   classNameTransform,
