@@ -15,7 +15,6 @@ function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
     jsxTransforms = [],
   } = options;
   m = decodeHTML(m);
-  console.log(m);
   if (transformClassToClassname) {
     jsxTransforms.push((type: string, props: any, children: any[]) => {
       if (children && typeof children[0] === 'string') {
