@@ -41528,9 +41528,17 @@ function markedToReact(m, h, options) {
       transformClassToClassname = _options$transformCla === void 0 ? true : _options$transformCla,
       _options$jsxTransform = options.jsxTransforms,
       jsxTransforms = _options$jsxTransform === void 0 ? [] : _options$jsxTransform;
-  m = decode(m);
+  m = decodeHTML(m);
+  console.log(m);
 
   if (transformClassToClassname) {
+    jsxTransforms.push(function (type, props, children) {
+      if (children && typeof children[0] === 'string') {
+        children[0] = decode(children[0]);
+      }
+
+      return [type, props, children];
+    });
     jsxTransforms.push(classNameTransform);
   }
 
@@ -41542,7 +41550,17 @@ function markedToReact(m, h, options) {
   return new Function('html', 'return html`' + m + '`').call(thisValue, html);
 }
 
-function transFormJSXToHTM(m) {
+function decodeHTML(m) {
+  // decode html entities outside of fenced blocks
+  m.split(/(<code>+)[\s\S]*?(<\/code>+)/).forEach(function (str) {
+    if (str !== '```') {
+      m = m.replace(str, decode(str));
+    }
+  });
+  return m;
+}
+
+function performTransFormJSXToHTM(m) {
   // transform JSX expressions to HTM expressions, but not in fenced blocks.
   return m.replace(/(```+)[\s\S]*?\2|={/g, function (str, fence) {
     return fence ? str : '=${';
@@ -41563,7 +41581,7 @@ function htmdx(m, h, options) {
     configureMarked(marked);
   }
 
-  return markedToReact(marked(transformJSXToHTM ? transFormJSXToHTM(m) : m), h, options);
+  return markedToReact(marked(transformJSXToHTM ? performTransFormJSXToHTM(m) : m), h, options);
 }
 
 exports.htmdx = htmdx;
@@ -43815,7 +43833,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35079" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33033" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

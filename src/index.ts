@@ -14,9 +14,15 @@ function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
     transformClassToClassname = true,
     jsxTransforms = [],
   } = options;
-  m = decode(m);
-
+  m = decodeHTML(m);
+  console.log(m);
   if (transformClassToClassname) {
+    jsxTransforms.push((type: string, props: any, children: any[]) => {
+      if (children && typeof children[0] === 'string') {
+        children[0] = decode(children[0]);
+      }
+      return [type, props, children];
+    });
     jsxTransforms.push(classNameTransform);
   }
   jsxTransforms.push(getComponentTransform(components));
@@ -28,7 +34,17 @@ function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
   return new Function('html', 'return html`' + m + '`').call(thisValue, html);
 }
 
-function transFormJSXToHTM(m: string): string {
+function decodeHTML(m: string): string {
+  // decode html entities outside of fenced blocks
+  m.split(/(<code>+)[\s\S]*?(<\/code>+)/).forEach(str => {
+    if (str !== '```') {
+      m = m.replace(str, decode(str));
+    }
+  });
+  return m;
+}
+
+function performTransFormJSXToHTM(m: string): string {
   // transform JSX expressions to HTM expressions, but not in fenced blocks.
   return m.replace(/(```+)[\s\S]*?\2|={/g, (str, fence) =>
     fence ? str : '=${'
@@ -44,7 +60,7 @@ export function htmdx<
     configureMarked(marked);
   }
   return markedToReact(
-    marked(transformJSXToHTM ? transFormJSXToHTM(m) : m),
+    marked(transformJSXToHTM ? performTransFormJSXToHTM(m) : m),
     h,
     options
   );
