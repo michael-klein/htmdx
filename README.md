@@ -80,6 +80,16 @@ ReactDOM.render(React.createElement(App), document.getElementById('root'));
 
 [![Edit htmdx example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/romantic-liskov-m4x35?fontsize=14&hidenavigation=1&theme=dark)
 
+### Pluggable MDX transforms
+
+You can supply MDX transforms, which will be applied to mdx strings before anything else:
+
+```javascript
+htmdx('# Hello World', React.createElement, {
+  mdxTransforms: [m => m.replace('# Hello World', '# foo')], // will replace # Hello world with # foo
+})
+```
+
 ### Pluggable JSX transforms
 
 You can supply JSX transforms which allow you to apply further transforms before the JSX pragma runs, like so:
