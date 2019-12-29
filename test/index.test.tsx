@@ -93,7 +93,19 @@ describe('htmdx', () => {
   });
 
   describe('customs transforms', () => {
-    it('should run custom transforms if supplied', () => {
+    it('should run custom MDX transforms if supplied', () => {
+      ReactDOM.render(
+        htmdx(simpleMarkdown, React.createElement, {
+          mdxTransforms: [m => m.replace('# Hello World', '# foo')],
+        }),
+        root
+      );
+      expect(root.innerHTML).not.toMatch(
+        /<h1 id="hello-world">Hello World<\/h1>/
+      );
+      expect(root.innerHTML).toMatch(/<h1 id="foo">foo<\/h1>/);
+    });
+    it('should run custom JSX transforms if supplied', () => {
       ReactDOM.render(
         htmdx(simpleMarkdown, React.createElement, {
           jsxTransforms: [
