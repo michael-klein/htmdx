@@ -6,6 +6,7 @@ import { setHTMLContext, html } from './bound_html';
 import {
   classNameTransform,
   getComponentTransform,
+  performTransFormJSXToHTM,
 } from './default_transforms';
 
 function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
@@ -44,24 +45,26 @@ function decodeHTML(m: string): string {
   return m;
 }
 
-function performTransFormJSXToHTM(m: string): string {
-  // transform JSX expressions to HTM expressions, but not in fenced blocks.
-  return m.replace(/(```+)[\s\S]*?\2|={/g, (str, fence) =>
-    fence ? str : '=${'
-  );
-}
-
 export function htmdx<
   H extends JSXFactory,
   O extends HtmdxOptions = HtmdxOptions
 >(m: string, h: H, options: O = {} as O): ReturnType<H> {
-  const { transformJSXToHTM = true, configureMarked } = options;
+  const {
+    transformJSXToHTM = true,
+    configureMarked,
+    mdxTransforms = [],
+  } = options;
   if (configureMarked) {
     configureMarked(marked);
   }
-  return markedToReact(
-    marked(transformJSXToHTM ? performTransFormJSXToHTM(m) : m),
-    h,
-    options
-  );
+
+  if (transformJSXToHTM) {
+    mdxTransforms.push(performTransFormJSXToHTM);
+  }
+
+  mdxTransforms.forEach(t => {
+    m = t(m);
+  });
+
+  return markedToReact(marked(m), h, options);
 }

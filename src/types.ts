@@ -12,6 +12,7 @@ export interface HtmdxOptions<
   transformJSXToHTM?: boolean;
   transformClassToClassname?: boolean;
   jsxTransforms?: JSXTransform[];
+  mdxTransforms?: MDXTransform[];
   configureMarked?: (marked: Marked) => void;
   thisValue?: ThisValue;
 }
@@ -21,3 +22,4 @@ export type JSXTransform = (
   props: any,
   children: any[]
 ) => [string, any, any];
+export type MDXTransform = (mdx: string) => string;

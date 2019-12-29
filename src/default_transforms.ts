@@ -25,3 +25,10 @@ export const getComponentTransform: (
   }
   return [type, props, children];
 };
+
+export function performTransFormJSXToHTM(m: string): string {
+  // transform JSX expressions to HTM expressions, but not in fenced blocks.
+  return m.replace(/(```+)[\s\S]*?\2|={/g, (str, fence) =>
+    fence ? str : '=${'
+  );
+}
