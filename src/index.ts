@@ -1,13 +1,13 @@
 import decode from 'html-entities-decode';
 import marked from 'marked';
 import { HtmdxOptions, JSXFactory } from './types';
-export { HtmdxOptions, JSXFactory, Components, Marked } from './types';
 import { setHTMLContext, html } from './bound_html';
 import {
   classNameTransform,
   getComponentTransform,
   performTransFormJSXToHTM,
 } from './default_transforms';
+export { HtmdxOptions, JSXFactory, Components, Marked } from './types';
 
 function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
   const {
@@ -32,6 +32,7 @@ function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
     jsxTransforms,
   });
 
+  // eslint-disable-next-line
   return new Function('html', 'return html`' + m + '`').call(thisValue, html);
 }
 

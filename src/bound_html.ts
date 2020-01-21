@@ -31,6 +31,6 @@ function applyTransforms(type: string, props: any, children: any[]): any {
   return currentHTMLContext.currentFactory(args[0], args[1], ...args[2]);
 }
 
-export const html = htm.bind(<JSXFactory>function(type, props, ...children) {
+export const html = htm.bind(function(type, props, ...children) {
   return applyTransforms(type, props, children);
-});
+} as JSXFactory);
