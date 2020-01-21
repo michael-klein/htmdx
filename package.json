@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@types/marked": "^0.7.2",
-    "htm": "^2.2.1",
+    "htm": "^3.0.1",
     "html-entities-decode": "^1.0.1",
     "marked": "^0.8.0"
   },
