@@ -109,11 +109,11 @@ describe('htmdx', () => {
       ReactDOM.render(
         htmdx(simpleMarkdown, React.createElement, {
           jsxTransforms: [
-            (props, type, children) => {
+            (type, props, children) => {
               if (children && children[0] === 'Hello World') {
-                children[0] = 'Foo';
+                return ["h2", { ...props, name: "foo" }, ['Foo']];
               }
-              return [props, type, children];
+              return [type, props, children];
             },
           ],
         }),
@@ -122,7 +122,9 @@ describe('htmdx', () => {
       expect(root.innerHTML).not.toMatch(
         /<h1 id="hello-world">Hello World<\/h1>/
       );
-      expect(root.innerHTML).toMatch(/<h1 id="hello-world">Foo<\/h1>/);
+      expect(root.innerHTML).toMatch(
+        /<h2 id="hello-world" name="foo">Foo<\/h2>/
+      );
     });
     it('should not transform class to className outside of code tags if disabled', () => {
       const result: string[] = [];
