@@ -111,7 +111,7 @@ describe('htmdx', () => {
           jsxTransforms: [
             (type, props, children) => {
               if (children && children[0] === 'Hello World') {
-                return ["h2", { ...props, name: "foo" }, ['Foo']];
+                return ['h2', { ...props, name: 'foo' }, ['Foo']];
               }
               return [type, props, children];
             },
