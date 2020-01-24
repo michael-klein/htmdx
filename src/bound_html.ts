@@ -26,7 +26,7 @@ export function setHTMLContext(context: HTMLContext): void {
 function applyTransforms(type: string, props: any, children: any[]): any {
   let args = [type, props, children];
   for (const transform of currentHTMLContext.jsxTransforms) {
-    args = transform(type, props, children);
+    args = transform(args[0], args[1], args[2]);
   }
   return currentHTMLContext.currentFactory(args[0], args[1], ...args[2]);
 }
