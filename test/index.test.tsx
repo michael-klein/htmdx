@@ -58,6 +58,16 @@ describe('htmdx', () => {
     expect(root.innerHTML).toMatch(/<h1 id="hello-world">Hello World<\/h1>/);
     expect(root.innerHTML).toMatch(/<pre><code>function SomeComponent\(\) {/);
   });
+  it('renders code blocks with backticks', () => {
+    ReactDOM.render(htmdx(`
+# Hello World
+\`\`\`
+Code with \`backticks\`
+\`\`\`
+    `, React.createElement), root);
+    expect(root.innerHTML).toMatch(/<h1 id="hello-world">Hello World<\/h1>/);
+    expect(root.innerHTML).toMatch(/<pre><code>Code with \`backticks\`/);
+  });
 
   describe('class transforms', () => {
     it('should transform class to className outside of code tags by default', () => {
