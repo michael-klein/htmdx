@@ -7,9 +7,9 @@ import {
   getComponentTransform,
   performTransFormJSXToHTM,
 } from './default_transforms';
-export { HtmdxOptions, JSXFactory, Components, Marked } from './types';
+export { HtmdxOptions, JSXFactory, Components } from './types';
 
-function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
+function markedToReact (m: string, h: JSXFactory, options: HtmdxOptions): any {
   const {
     components = {},
     thisValue = {},
@@ -35,11 +35,11 @@ function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
   // eslint-disable-next-line
   return new Function(
     'html',
-    'return html`' + m.replace(/`/g, "\\\`") + '`'
+    'return html`' + m.replace(/`/g, '\\`') + '`'
   ).call(thisValue, html);
 }
 
-function decodeHTML(m: string): string {
+function decodeHTML (m: string): string {
   // decode html entities outside of fenced blocks
   m.split(/(<code>+)[\s\S]*?(<\/code>+)/).forEach(str => {
     if (str !== '```') {
@@ -52,12 +52,13 @@ function decodeHTML(m: string): string {
 export function htmdx<
   H extends JSXFactory,
   O extends HtmdxOptions = HtmdxOptions
->(m: string, h: H, options: O = {} as O): ReturnType<H> {
+> (m: string, h: H, options: O = {} as O): ReturnType<H> {
   const {
     transformJSXToHTM = true,
     configureMarked,
     mdxTransforms = [],
   } = options;
+  marked.setOptions({ xhtml: true });
   if (configureMarked) {
     configureMarked(marked);
   }

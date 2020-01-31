@@ -41475,7 +41475,7 @@ function applyTransforms(type, props, children) {
     }
 
     var transform = _ref;
-    args = transform(type, props, children);
+    args = transform(args[0], args[1], args[2]);
   }
 
   return (_currentHTMLContext = currentHTMLContext).currentFactory.apply(_currentHTMLContext, [args[0], args[1]].concat(args[2]));
@@ -41544,8 +41544,9 @@ function markedToReact(m, h, options) {
   setHTMLContext({
     currentFactory: h,
     jsxTransforms: jsxTransforms
-  });
-  return new Function('html', 'return html`' + m + '`').call(thisValue, html);
+  }); // eslint-disable-next-line
+
+  return new Function('html', 'return html`' + m.replace(/`/g, '\\`') + '`').call(thisValue, html);
 }
 
 function decodeHTML(m) {
@@ -41569,6 +41570,9 @@ function htmdx(m, h, options) {
       configureMarked = _options.configureMarked,
       _options$mdxTransform = _options.mdxTransforms,
       mdxTransforms = _options$mdxTransform === void 0 ? [] : _options$mdxTransform;
+  marked.setOptions({
+    xhtml: true
+  });
 
   if (configureMarked) {
     configureMarked(marked);
@@ -43833,7 +43837,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33127" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36071" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
