@@ -33,7 +33,10 @@ function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
   });
 
   // eslint-disable-next-line
-  return new Function('html', 'return html`' + m + '`').call(thisValue, html);
+  return new Function(
+    'html',
+    'return html`' + m.replace(/`/g, "\\\`") + '`'
+  ).call(thisValue, html);
 }
 
 function decodeHTML(m: string): string {
