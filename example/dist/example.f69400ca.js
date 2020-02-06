@@ -41551,11 +41551,10 @@ function markedToReact(m, h, options) {
 
 function decodeHTML(m) {
   // decode html entities outside of fenced blocks
-  m.split(/(<code>+)[\s\S]*?(<\/code>+)/).forEach(function (str) {
-    if (str !== '```') {
-      m = m.replace(str, decode(str));
-    }
+  m.split(/(<code+)[\s\S]*?(<\/code>+)/).forEach(function (str) {
+    m = m.replace(str, decode(str));
   });
+  console.log(m);
   return m;
 }
 
@@ -43744,7 +43743,7 @@ function TestComponent(props) {
   return html(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    <div>hello ", "</div>\n  "], ["\n    <div>hello ", "</div>\n  "])), props.children);
 }
 
-var markDownWithJSX = " \n# hello world\n\n## this is an input that actually prints something to the console on change:\n\n<input type=\"text\" value=${\"\"} onChange=${e => console.log(e.target.value)}/>\n\n## Here is a simple component:\n\n<TestComponent>world</TestComponent>\n\n\n## Some simple code highlighting:\n\n```\nfunction hi() {\n  console.log(\"hi\")   \n}\n```\n";
+var markDownWithJSX = " \n# hello world\n\n## this is an input that actually prints something to the console on change:\n\n<input type=\"text\" value=${\"\"} onChange=${e => console.log(e.target.value)}/>\n\n## Here is a simple component:\n\n<TestComponent>world</TestComponent>\n\n```\n{\n  ...,\n  \"authors\": [\n    \"John Doe <john.doe@example.com>\"\n  ],\n  ...\n}\n```\n\n\n## Some simple code highlighting:\n\n```\nfunction hi() {\n  console.log(\"hi\")   \n}\n```\n";
 var padding = 8;
 
 var ErrorComponent = function ErrorComponent(_a) {
@@ -43837,7 +43836,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36071" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38235" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

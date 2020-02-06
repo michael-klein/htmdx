@@ -41,10 +41,8 @@ function markedToReact(m: string, h: JSXFactory, options: HtmdxOptions): any {
 
 function decodeHTML(m: string): string {
   // decode html entities outside of fenced blocks
-  m.split(/(<code>+)[\s\S]*?(<\/code>+)/).forEach(str => {
-    if (str !== '```') {
-      m = m.replace(str, decode(str));
-    }
+  m.split(/(<code+)[\s\S]*?(<\/code>+)/).forEach(str => {
+    m = m.replace(str, decode(str));
   });
   return m;
 }

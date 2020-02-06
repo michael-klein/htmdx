@@ -46,6 +46,16 @@ const markDownWithJSX = `
 
 <TestComponent>world</TestComponent>
 
+\`\`\`
+{
+  ...,
+  "authors": [
+    "John Doe <john.doe@example.com>"
+  ],
+  ...
+}
+\`\`\`
+
 
 ## Some simple code highlighting:
 
