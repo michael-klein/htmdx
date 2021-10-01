@@ -1,12 +1,12 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { injectGlobal } from 'emotion';
+import { jsx } from '@emotion/react';
+import { css, injectGlobal } from '@emotion/css';
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { htmdx } from '../dist';
 import htm from 'htm';
-import ErrorBoundary from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 import * as Prism from 'prismjs';
 
 injectGlobal`
@@ -69,7 +69,7 @@ const padding = 8;
 
 const ErrorComponent = ({ componentStack, error }) => (
   <div
-    css={css`
+    className={css`
       padding: ${padding}px;
       background: #d58686;
       color: white;
@@ -84,7 +84,7 @@ const ErrorComponent = ({ componentStack, error }) => (
     <p>
       <strong>Error:</strong>{' '}
       <pre
-        css={css`
+        className={css`
           white-space: pre-wrap;
         `}
       >
@@ -94,7 +94,7 @@ const ErrorComponent = ({ componentStack, error }) => (
     <p>
       <strong>Stacktrace:</strong>{' '}
       <pre
-        css={css`
+        className={css`
           white-space: pre-wrap;
         `}
       >
@@ -107,7 +107,7 @@ const ErrorComponent = ({ componentStack, error }) => (
 function RenderOutput({ input }): JSX.Element {
   return (
     <div
-      css={css`
+      className={css`
         flex: auto;
         padding: ${padding}px;
         font-family: 'Inria Serif', serif;
@@ -135,13 +135,13 @@ function HTMDXEditor(): JSX.Element {
   const [input, setInput] = React.useState(markDownWithJSX);
   return (
     <div
-      css={css`
+      className={css`
         height: 100%;
         display: flex;
       `}
     >
       <div
-        css={css`
+        className={css`
           flex: 1;
           display: flex;
           flex-direction: column;
@@ -149,7 +149,7 @@ function HTMDXEditor(): JSX.Element {
         `}
       >
         <div
-          css={css`
+          className={css`
             padding: ${padding}px;
             color: black;
             background: #d5d486;
@@ -161,7 +161,7 @@ function HTMDXEditor(): JSX.Element {
           autoCorrect="false"
           spellCheck="false"
           onChange={e => setInput(e.target.value || '')}
-          css={css`
+          className={css`
             width: 100%;
             flex: auto;
             resize: none;
@@ -174,12 +174,11 @@ function HTMDXEditor(): JSX.Element {
               outline: 0;
             }
           `}
-        >
-          {input}
-        </textarea>
+          value={input}
+        ></textarea>
       </div>
       <div
-        css={css`
+        className={css`
           flex: 1;
           display: flex;
           flex-direction: column;
@@ -187,7 +186,7 @@ function HTMDXEditor(): JSX.Element {
         `}
       >
         <div
-          css={css`
+          className={css`
             padding: ${padding}px;
             color: white;
             text-align: right;
