@@ -4,7 +4,7 @@ import { css, injectGlobal } from '@emotion/css';
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { htmdx } from '../dist';
+import { xhtmdx } from '../dist';
 import htm from 'htm';
 import { ErrorBoundary } from 'react-error-boundary';
 import * as Prism from 'prismjs';
@@ -114,7 +114,7 @@ function RenderOutput({ input }): JSX.Element {
         overflow: auto;
       `}
     >
-      {htmdx(input, React.createElement, {
+      {xhtmdx(input, React.createElement, {
         components: { TestComponent },
         configureMarked: marked =>
           marked.setOptions({

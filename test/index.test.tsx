@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { htmdx } from '../src';
+import { htmdx } from '../src/htmdx';
 
 const simpleMarkdown = `
 # Hello World

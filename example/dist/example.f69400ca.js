@@ -41711,7 +41711,193 @@ function _default(s) {
     return p(), h;
   }(s)), r), arguments, [])).length > 1 ? r : r[0];
 }
-},{}],"../dist/htmdx.cjs.development.js":[function(require,module,exports) {
+},{}],"../node_modules/xhtm/htm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = htm;
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var FIELD = "\uE000",
+    QUOTES = "\uE001";
+
+function htm(statics) {
+  var _arguments = arguments;
+  var h = this,
+      prev = 0,
+      current = [],
+      field = 0,
+      args,
+      name,
+      value,
+      quotes = [],
+      quote = 0,
+      last;
+  current.root = true;
+
+  var evaluate = function evaluate(str) {
+    var parts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var raw = arguments.length > 2 ? arguments[2] : undefined;
+    var i = 0;
+    str = !raw && str === QUOTES ? quotes[quote++].slice(1, -1) : str.replace(/\ue001/g, function (m) {
+      return quotes[quote++];
+    });
+    if (!str) return str;
+    str.replace(/\ue000/g, function (match, idx) {
+      if (idx) parts.push(str.slice(i, idx));
+      i = idx + 1;
+      return parts.push(_arguments[++field]);
+    });
+    if (i < str.length) parts.push(str.slice(i));
+    return parts.length > 1 ? parts : parts[0];
+  }; // close level
+
+
+  var up = function up() {
+    var _current = current;
+
+    var _current2 = _toArray(_current);
+
+    current = _current2[0];
+    last = _current2[1];
+    args = _current2.slice(2);
+    current.push(h.apply(void 0, [last].concat(_toConsumableArray(args))));
+  };
+
+  statics.join(FIELD).replace(/<!--[^]*-->/g, '').replace(/<!\[CDATA\[[^]*\]\]>/g, '').replace(/('|")[^\1]*?\1/g, function (match) {
+    return quotes.push(match), QUOTES;
+  }) // .replace(/^\s*\n\s*|\s*\n\s*$/g,'')
+  .replace(/\s+/g, ' ') // ...>text<... sequence
+  .replace(/(?:^|>)([^<]*)(?:$|<)/g, function (match, text, idx, str) {
+    var close, tag;
+
+    if (idx) {
+      str.slice(prev, idx) // <abc/> → <abc />
+      .replace(/(\S)\/$/, '$1 /').split(' ').map(function (part, i) {
+        if (part[0] === '/') {
+          close = tag || part.slice(1) || 1;
+        } else if (!i) {
+          tag = evaluate(part); // <p>abc<p>def, <tr><td>x<tr>
+
+          while (htm.close[current[1] + tag]) {
+            up();
+          }
+
+          current = [current, tag, null];
+          if (htm.empty[tag]) close = tag;
+        } else if (part) {
+          var props = current[2] || (current[2] = {});
+
+          if (part.slice(0, 3) === '...') {
+            Object.assign(props, _arguments[++field]);
+          } else {
+            var _part$split = part.split('=');
+
+            var _part$split2 = _slicedToArray(_part$split, 2);
+
+            name = _part$split2[0];
+            value = _part$split2[1];
+            props[evaluate(name)] = value ? evaluate(value) : true;
+          }
+        }
+      });
+    }
+
+    if (close) {
+      up(); // if last child is closable - close it too
+
+      while (last !== close && htm.close[last]) {
+        up();
+      }
+    }
+
+    prev = idx + match.length;
+    if (text && text !== ' ') evaluate((last = 0, text), current, true);
+  });
+  if (!current.root) up();
+  return current.length > 1 ? current : current[0];
+} // self-closing elements
+
+
+htm.empty = {}; // optional closing elements
+
+htm.close = {};
+},{}],"../node_modules/xhtm/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _htm = _interopRequireDefault(require("./htm"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+'area base br col command embed hr img input keygen link meta param source track wbr ! !doctype ? ?xml'.split(' ').map(function (v) {
+  return _htm.default.empty[v] = _htm.default.empty[v.toUpperCase()] = true;
+}); // https://html.spec.whatwg.org/multipage/syntax.html#optional-tags
+// closed by the corresponding tag or end of parent content
+
+var close = {
+  'li': '',
+  'dt': 'dd',
+  'dd': 'dt',
+  'p': 'address article aside blockquote details div dl fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 header hgroup hr main menu nav ol pre section table',
+  'rt': 'rp',
+  'rp': 'rt',
+  'optgroup': '',
+  'option': 'optgroup',
+  'caption': 'tbody thead tfoot tr colgroup',
+  'colgroup': 'thead tbody tfoot tr caption',
+  'thead': 'tbody tfoot caption',
+  'tbody': 'tfoot caption',
+  'tfoot': 'caption',
+  'tr': 'tbody tfoot',
+  'td': 'th tr',
+  'th': 'td tr tbody'
+};
+
+var _loop = function _loop(tag) {
+  [].concat(_toConsumableArray(close[tag].split(' ')), [tag]).map(function (closer) {
+    _htm.default.close[tag] = _htm.default.close[tag.toUpperCase()] = _htm.default.close[tag + closer] = _htm.default.close[tag.toUpperCase() + closer] = _htm.default.close[tag + closer.toUpperCase()] = _htm.default.close[tag.toUpperCase() + closer.toUpperCase()] = true;
+  });
+};
+
+for (var tag in close) {
+  _loop(tag);
+}
+
+var _default = _htm.default;
+exports.default = _default;
+},{"./htm":"../node_modules/xhtm/htm.js"}],"../dist/htmdx.cjs.development.js":[function(require,module,exports) {
 'use strict';
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -41729,6 +41915,8 @@ var decode = _interopDefault(require('html-entities-decode'));
 var marked = _interopDefault(require('marked'));
 
 var htm = _interopDefault(require('htm'));
+
+var xhtm = _interopDefault(require('xhtm'));
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
@@ -41811,6 +41999,15 @@ htm.bind(function (type, props) {
 
   return applyTransforms(type, props, children);
 });
+var xhtml =
+/*#__PURE__*/
+xhtm.bind(function (type, props) {
+  for (var _len3 = arguments.length, children = new Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
+    children[_key3 - 2] = arguments[_key3];
+  }
+
+  return applyTransforms(type, props, children);
+});
 
 var classNameTransform = function classNameTransform(type, props, children) {
   if (props != null && 'class' in props) {
@@ -41839,7 +42036,7 @@ function performTransFormJSXToHTM(m) {
   });
 }
 
-function markedToReact(m, h, options) {
+function markedToReact(m, h, options, htmlTag) {
   var _options$components = options.components,
       components = _options$components === void 0 ? {} : _options$components,
       _options$thisValue = options.thisValue,
@@ -41867,7 +42064,7 @@ function markedToReact(m, h, options) {
     jsxTransforms: jsxTransforms
   }); // eslint-disable-next-line
 
-  return new Function('html', 'return html`' + m.replace(/`/g, '\\`') + '`').call(thisValue, html);
+  return new Function('html', 'return html`' + m.replace(/`/g, '\\`') + '`').call(thisValue, htmlTag);
 }
 
 function decodeHTML(m) {
@@ -41878,16 +42075,11 @@ function decodeHTML(m) {
   return m;
 }
 
-function htmdx(m, h, options) {
-  if (options === void 0) {
-    options = {};
-  }
-
-  var _options = options,
-      _options$transformJSX = _options.transformJSXToHTM,
+function stringToReact(m, h, options, mToReact) {
+  var _options$transformJSX = options.transformJSXToHTM,
       transformJSXToHTM = _options$transformJSX === void 0 ? true : _options$transformJSX,
-      configureMarked = _options.configureMarked,
-      _options$mdxTransform = _options.mdxTransforms,
+      configureMarked = options.configureMarked,
+      _options$mdxTransform = options.mdxTransforms,
       mdxTransforms = _options$mdxTransform === void 0 ? [] : _options$mdxTransform;
   marked.setOptions({
     xhtml: true
@@ -41904,11 +42096,32 @@ function htmdx(m, h, options) {
   mdxTransforms.forEach(function (t) {
     m = t(m);
   });
-  return markedToReact(marked(m), h, options);
+  return mToReact(marked(m), h, options);
+}
+
+function htmdx(m, h, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  return stringToReact(m, h, options, function (m, h, options) {
+    return markedToReact(m, h, options, html);
+  });
+}
+
+function xhtmdx(m, h, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  return stringToReact(m, h, options, function (m, h, options) {
+    return markedToReact(m, h, options, xhtml);
+  });
 }
 
 exports.htmdx = htmdx;
-},{"html-entities-decode":"../node_modules/html-entities-decode/dist/index.js","marked":"../node_modules/marked/lib/marked.js","htm":"../node_modules/htm/dist/htm.module.js"}],"../dist/index.js":[function(require,module,exports) {
+exports.xhtmdx = xhtmdx;
+},{"html-entities-decode":"../node_modules/html-entities-decode/dist/index.js","marked":"../node_modules/marked/lib/marked.js","htm":"../node_modules/htm/dist/htm.module.js","xhtm":"../node_modules/xhtm/index.js"}],"../dist/index.js":[function(require,module,exports) {
 'use strict';
 
 if ("development" === 'production') {
@@ -44040,7 +44253,7 @@ function RenderOutput(_a) {
   var input = _a.input;
   return react_1.jsx("div", {
     className: css_1.css(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n        flex: auto;\n        padding: ", "px;\n        font-family: 'Inria Serif', serif;\n        overflow: auto;\n      "], ["\n        flex: auto;\n        padding: ", "px;\n        font-family: 'Inria Serif', serif;\n        overflow: auto;\n      "])), padding)
-  }, dist_1.htmdx(input, React.createElement, {
+  }, dist_1.xhtmdx(input, React.createElement, {
     components: {
       TestComponent: TestComponent
     },
@@ -44115,7 +44328,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55514" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50443" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
