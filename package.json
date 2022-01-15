@@ -46,7 +46,7 @@
     "@types/marked": "^3.0.1",
     "htm": "^3.1.0",
     "html-entities-decode": "^1.0.2",
-    "marked": "^3.0.4",
+    "marked": "^4.0.10",
     "xhtm": "^1.5.3"
   },
   "description": "<p align=\"center\">   <img alt=\"HTMDX logo\" src=\"./htmdx.svg\" width=\"100\" /> </p>",
