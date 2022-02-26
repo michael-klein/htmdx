@@ -10,7 +10,7 @@
   "dependencies": {
     "@emotion/core": "^11.0.0",
     "emotion": "^11.0.0",
-    "prismjs": "^1.25.0",
+    "prismjs": "^1.27.0",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0"
   },
